@@ -418,8 +418,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd8fc66fce8ac294686c60e9c0a5bdc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  columns: 9
-  rows: 9
+  colCount: 9
+  rowCount: 9
   squareOffset: 3.5
   gridSquare: {fileID: 4983336259264210131, guid: 7671080ad35825b4bbeb419264b7bfbc,
     type: 3}

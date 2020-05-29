@@ -5,19 +5,27 @@ using UnityEngine;
 public class SudokuGrid : MonoBehaviour
 {
 
-    public int columns = 0; //colCount
+    [SerializeField]
+    private int colCount = 0; 
     
-    public int rows = 0; //rowCount
+    [SerializeField]
+    private int rowCount = 0;
 
-    public float squareOffset = 0.0f;
+    [SerializeField]
+    private float squareOffset = 0.0f;
 
-    public GameObject gridSquare;
+    [SerializeField]
+    private GameObject gridSquare;
 
-    public Vector2 startPos = new Vector2(0.0f, 0.0f);
+    [SerializeField]
+    private Vector2 startPos = new Vector2(0.0f, 0.0f);
 
-    public float squareScale = 1.0f;
+    [SerializeField]
+    private float squareScale = 1.0f;
 
     private List<GameObject> gridSquareList = new List<GameObject>();
+
+    private int selectedGridData = -1;
 
     void Start()
     {
@@ -27,7 +35,7 @@ public class SudokuGrid : MonoBehaviour
             Debug.Log("This Object need to have a GridSquare script attached!");
         }
         CreateGrid();
-        SetGridNumber();
+        SetGridNumber("Easy");
         Debug.Log("SudokuGrid End");
     }
 
@@ -46,9 +54,9 @@ public class SudokuGrid : MonoBehaviour
     private void SpawnGridSquares()
     {
         Debug.Log("SpawnGridSquares Start");
-        for (int row = 0; row < rows; row++)
+        for (int row = 0; row < rowCount; row++)
         {
-            for (int column = 0; column < columns; column++)
+            for (int column = 0; column < colCount; column++)
             {   
                 gridSquareList.Add(Instantiate(gridSquare) as GameObject);
                 gridSquareList[gridSquareList.Count - 1].transform.parent = this.transform;
@@ -70,7 +78,7 @@ public class SudokuGrid : MonoBehaviour
 
         foreach (GameObject square in gridSquareList)
         {
-            if (columnNumber + 1 > columns)
+            if (columnNumber + 1 > colCount)
             {
                 rowNumber++;
                 columnNumber = 0;
@@ -82,12 +90,25 @@ public class SudokuGrid : MonoBehaviour
         }
     }
 
-    private void SetGridNumber()
+    private void SetGridNumber(string level)
     {
         Debug.Log("SetGridNumber Start");
-        foreach (var square in gridSquareList)
+        selectedGridData = UnityEngine.Random.Range(0, SudokuData.Instance.sudokuGame[level].Count);
+        var data = SudokuData.Instance.sudokuGame[level][selectedGridData];
+
+
+        SetGridSquareData(data);
+        // foreach (var square in gridSquareList)
+        // {
+        //     square.GetComponent<GridSquare>().SetNumber(UnityEngine.Random.Range(1, 10));
+        // }
+    }
+
+    private void SetGridSquareData(SudokuData.SudokuBoardData data)
+    {
+        for (int index = 0; index < gridSquareList.Count; index++)
         {
-            square.GetComponent<GridSquare>().SetNumber(UnityEngine.Random.Range(1, 10));
+            gridSquareList[index].GetComponent<GridSquare>().SetNumber(data.unsolvedData[index]);
         }
     }
 }
