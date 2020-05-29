@@ -29,14 +29,12 @@ public class SudokuGrid : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("SudokuGrid Start");
         if (gridSquare.GetComponent<GridSquare>() == null)
         {
             Debug.Log("This Object need to have a GridSquare script attached!");
         }
         CreateGrid();
-        SetGridNumber("Easy");
-        Debug.Log("SudokuGrid End");
+        SetGridNumber(GameSettings.Instance.GetGameMode());
     }
 
     // void Update()
@@ -46,14 +44,12 @@ public class SudokuGrid : MonoBehaviour
 
     private void CreateGrid()
     {
-        Debug.Log("CreateGrid Start");
         SpawnGridSquares();
         SetSquaresPosition();
     }
 
     private void SpawnGridSquares()
     {
-        Debug.Log("SpawnGridSquares Start");
         for (int row = 0; row < rowCount; row++)
         {
             for (int column = 0; column < colCount; column++)
@@ -67,7 +63,6 @@ public class SudokuGrid : MonoBehaviour
 
     private void SetSquaresPosition()
     {
-        Debug.Log("SetSquaresPosition Start");
         var squareRect = gridSquareList[0].GetComponent<RectTransform>();
         Vector2 offset = new Vector2();
         offset.x = squareRect.rect.width * squareRect.transform.localScale.x + squareOffset;
@@ -92,16 +87,10 @@ public class SudokuGrid : MonoBehaviour
 
     private void SetGridNumber(string level)
     {
-        Debug.Log("SetGridNumber Start");
         selectedGridData = UnityEngine.Random.Range(0, SudokuData.Instance.sudokuGame[level].Count);
         var data = SudokuData.Instance.sudokuGame[level][selectedGridData];
 
-
         SetGridSquareData(data);
-        // foreach (var square in gridSquareList)
-        // {
-        //     square.GetComponent<GridSquare>().SetNumber(UnityEngine.Random.Range(1, 10));
-        // }
     }
 
     private void SetGridSquareData(SudokuData.SudokuBoardData data)

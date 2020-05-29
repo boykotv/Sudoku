@@ -23,7 +23,6 @@ public class GridSquare : Selectable
 
     public void DisplayText()
     {
-        Debug.Log("DisplayText Start");
         if (number_ <= 0)
         {
             numberText.GetComponent<Text>().text = " ";
@@ -36,7 +35,6 @@ public class GridSquare : Selectable
 
     public void SetNumber(int number)
     {
-        Debug.Log("SetNumber Start");
         number_ = number;
         DisplayText();
     }
