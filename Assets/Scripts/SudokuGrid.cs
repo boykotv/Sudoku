@@ -50,13 +50,18 @@ public class SudokuGrid : MonoBehaviour
 
     private void SpawnGridSquares()
     {
+        int square_index = 0;
+
         for (int row = 0; row < rowCount; row++)
         {
             for (int column = 0; column < colCount; column++)
             {   
                 gridSquareList.Add(Instantiate(gridSquare) as GameObject);
+                gridSquareList[gridSquareList.Count - 1].GetComponent<GridSquare>().SetSquareIndex(square_index);
                 gridSquareList[gridSquareList.Count - 1].transform.parent = this.transform;
                 gridSquareList[gridSquareList.Count - 1].transform.localScale = new Vector3(squareScale, squareScale, squareScale);
+                
+                square_index++;
             }
         }
     }
