@@ -8,76 +8,83 @@ using UnityEngine.EventSystems;
 public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPointerUpHandler, IPointerExitHandler
 {
 
-    public GameObject numberText;
+    public GameObject squareText;
 
-    private int number_ = 0; //?
-
-    private int correct_number_ = 0;
-
-    private bool selected_ = false;
-
-    private int square_index_ = -1;
-
-    private bool has_default_value_ = false;
-
-    public void SetHasDefaultValue(bool has_default) //i don't like it -> prop
+    private int enteredNumber = 0;
+    public int EnteredNumber
     {
-        has_default_value_ = has_default;
+        get
+        {
+            return enteredNumber;
+        }
+        set
+        {
+            this.enteredNumber = value;
+            DisplayText();
+        }
     }
 
-    public GetHasDefaultValue() //i don't like it -> prop
+    private int correctNumber;
+    public int CorrectNumber
     {
-        return has_default_value_;
+        get
+        {
+            return correctNumber;
+        }
+        set
+        {
+            this.correctNumber = value;
+        }
     }
 
-    public bool IsSelected() //prop?
+    private bool isSelected;
+    public bool IsSelected
     {
-        return selected_;
-    }
-    
-    public void SetSquareIndex(int index) //prop?
-    {
-        square_index_ = index;
-    }
-
-    public void SetCorrectNumber(int number) //prop?
-    {
-        correct_number_ = number;
+        get
+        {
+            return isSelected;
+        }
+        set
+        {
+            this.isSelected = value;
+        }
     }
 
-    void Start()
+    private bool hasDefaultValue;
+    public bool HasDefaultValue
     {
-        selected_ = false;
+        get
+        {
+            return hasDefaultValue;
+        }
+        set
+        {
+            this.hasDefaultValue = value;
+        }
     }
 
-    // Update is called once per frame
-    // void Update()
-    // {
-        
-    // }
+    private int squareIndex;
+    public int SquareIndex
+    {
+        get
+        {
+            return squareIndex;
+        }
+        set
+        {
+            this.squareIndex = value;
+        }
+    }
 
     public void DisplayText()
     {
-        if (number_ <= 0)
-        {
-            numberText.GetComponent<Text>().text = " ";
-        }
-        else
-        {
-            numberText.GetComponent<Text>().text = number_.ToString();
-        }
-    }
-
-    public void SetNumber(int number)
-    {
-        number_ = number;
-        DisplayText();
+        squareText.GetComponent<Text>().text = EnteredNumber <= 0 ? " " : EnteredNumber.ToString();
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        selected_ = true;
-        GameEvents.SquareSelectedMethod(square_index_);
+        IsSelected = true;
+        GameEvents.SquareSelectedMethod(SquareIndex);
     }
 
     public void OnSubmit(BaseEventData eventData)
@@ -100,13 +107,13 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
 
     public void OnSetNumber(int number)
     {
-        if (selected_ && !has_default_value_)
+        if (IsSelected && !HasDefaultValue)
         {
-            SetNumber(number);
+            EnteredNumber = number;
+            ColorBlock colors = this.colors;
 
-            if (number_ != correct_number_)
+            if (EnteredNumber != CorrectNumber)
             {
-                var colors = this.colors; //?
                 colors.normalColor = Color.red;
                 this.colors = colors;
 
@@ -114,8 +121,7 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
             }
             else
             {
-                has_default_value_ = true;
-                var colors = this.colors; //?
+                HasDefaultValue = true;
                 colors.normalColor = Color.white;
                 this.colors = colors;
             }
@@ -124,9 +130,9 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
 
     public void OnSquareSelected(int square_index)
     {
-        if (square_index != square_index_)
+        if (square_index != SquareIndex)
         {
-            selected_ = false;
+            IsSelected = false;
         }
     }
 

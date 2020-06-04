@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+//!.history/*
 //i don't like it. need some GameManager, not MainCamera
 public class GameSettings : MonoBehaviour
 {

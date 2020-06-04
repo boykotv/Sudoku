@@ -37,11 +37,6 @@ public class SudokuGrid : MonoBehaviour
         SetGridNumber(GameSettings.Instance.GetGameMode());
     }
 
-    // void Update()
-    // {
-        
-    // }
-
     private void CreateGrid()
     {
         SpawnGridSquares();
@@ -50,18 +45,18 @@ public class SudokuGrid : MonoBehaviour
 
     private void SpawnGridSquares()
     {
-        int square_index = 0;
+        int cellIndex = 0;
 
         for (int row = 0; row < rowCount; row++)
         {
             for (int column = 0; column < colCount; column++)
             {   
                 gridSquareList.Add(Instantiate(gridSquare) as GameObject);
-                gridSquareList[gridSquareList.Count - 1].GetComponent<GridSquare>().SetSquareIndex(square_index);
+                gridSquareList[gridSquareList.Count - 1].GetComponent<GridSquare>().SquareIndex = cellIndex;
                 gridSquareList[gridSquareList.Count - 1].transform.parent = this.transform;
                 gridSquareList[gridSquareList.Count - 1].transform.localScale = new Vector3(squareScale, squareScale, squareScale);
                 
-                square_index++;
+                cellIndex++;
             }
         }
     }
@@ -100,11 +95,11 @@ public class SudokuGrid : MonoBehaviour
 
     private void SetGridSquareData(SudokuData.SudokuBoardData data)
     {
-        for (int index = 0; index < gridSquareList.Count; index++)
+        for (int cellIndex = 0; cellIndex < gridSquareList.Count; cellIndex++)
         {
-            gridSquareList[index].GetComponent<GridSquare>().SetNumber(data.unsolvedData[index]);
-            gridSquareList[index].GetComponent<GridSquare>().SetCorrectNumber(data.solvedData[index]);
-            gridSquareList[index].GetComponent<GridSquare>().SetHasDefaultValue(data.unsolvedData[index != 0 && data.unsolvedData[index] == data.solvedData[index]]);
+            gridSquareList[cellIndex].GetComponent<GridSquare>().EnteredNumber = data.unsolvedData[cellIndex];
+            gridSquareList[cellIndex].GetComponent<GridSquare>().CorrectNumber = data.solvedData[cellIndex];
+            gridSquareList[cellIndex].GetComponent<GridSquare>().HasDefaultValue = data.unsolvedData[cellIndex] != 0 && data.unsolvedData[cellIndex] == data.solvedData[cellIndex];
         }
     }
 }

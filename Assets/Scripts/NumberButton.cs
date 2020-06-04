@@ -10,18 +10,6 @@ public class NumberButton : Selectable, IPointerClickHandler, ISubmitHandler, IP
    // [SerializeField]
     public int value = 0; //i don't like it. -> work with tags
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void OnPointerClick(PointerEventData eventData)
     {
         GameEvents.UpdateSquareNumberMethod(value); //->tag
