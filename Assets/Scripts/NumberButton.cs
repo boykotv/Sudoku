@@ -7,8 +7,8 @@ using UnityEngine.EventSystems;
 
 public class NumberButton : Selectable, IPointerClickHandler, ISubmitHandler, IPointerUpHandler, IPointerExitHandler
 {
-   // [SerializeField]
-    public int value = 0; //i don't like it. -> work with tags
+    [SerializeField]
+    private int value = 0; //i don't like it. -> work with tags
 
     public void OnPointerClick(PointerEventData eventData)
     {

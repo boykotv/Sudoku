@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class Lives : MonoBehaviour
 {
-    public List<GameObject> error_images;
+    [SerializeField]
+    private List<GameObject> error_images;
     
     int lives_ = 0; //зачем жизни декрементировать, если считаем ошибки. можно же сравнивать кол-во ошибок с кол-вом жизней
 
     int error_number_ = 0;
+
+    [SerializeField]
+    private GameObject gameOverPopUp;
 
     // Start is called before the first frame update
     void Start()
@@ -19,11 +23,20 @@ public class Lives : MonoBehaviour
 
     private void WrongNumber()
     {
-        if (error_number_ < error_images.Count)
+        if (error_number_ < error_images.Count) // i don't like it
         {
             error_images[error_number_].SetActive(true);
             error_number_++;
             lives_--;
+        }
+        CheckForGameOver();
+    }
+
+    private void CheckForGameOver()
+    {
+        if (lives_ <= 0)
+        {
+            gameOverPopUp.SetActive(true);
         }
     }
 
@@ -36,4 +49,5 @@ public class Lives : MonoBehaviour
     {
         GameEvents.OnWrongNumber -= WrongNumber;
     }
+
 }

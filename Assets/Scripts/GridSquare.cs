@@ -7,8 +7,8 @@ using UnityEngine.EventSystems;
 
 public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPointerUpHandler, IPointerExitHandler
 {
-
-    public GameObject squareText;
+    [SerializeField]
+    private GameObject squareText;
 
     private int enteredNumber = 0;
     public int EnteredNumber
