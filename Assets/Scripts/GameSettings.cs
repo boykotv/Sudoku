@@ -20,7 +20,7 @@ public class GameSettings : MonoBehaviour
 
     private void Awake()
     {
-        paused = false;
+        Paused = false;
         if (Instance == null)
         {
             DontDestroyOnLoad(this);
