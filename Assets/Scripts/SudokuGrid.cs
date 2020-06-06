@@ -6,26 +6,29 @@ public class SudokuGrid : MonoBehaviour
 {
 
     [SerializeField]
-    private int colCount = 0; 
+    private int colCount; 
     
     [SerializeField]
-    private int rowCount = 0;
+    private int rowCount;
 
     [SerializeField]
-    private float squareOffset = 0.0f;
+    private float squareOffset;
 
     [SerializeField]
     private GameObject gridSquare;
 
     [SerializeField]
-    private Vector2 startPos = new Vector2(0.0f, 0.0f);
+    private Vector2 startPos;
 
     [SerializeField]
-    private float squareScale = 1.0f;
+    private float squareScale;
 
     private List<GameObject> gridSquareList = new List<GameObject>();
 
     private int selectedGridData = -1;
+
+    [SerializeField]
+    private float squareDistance;
 
     void Start()
     {
@@ -65,6 +68,9 @@ public class SudokuGrid : MonoBehaviour
     {
         var squareRect = gridSquareList[0].GetComponent<RectTransform>();
         Vector2 offset = new Vector2();
+        Vector2 squareDistanceNumb = new Vector2(0, 0);
+        bool rowMoved = false;
+
         offset.x = squareRect.rect.width * squareRect.transform.localScale.x + squareOffset;
         offset.y = squareRect.rect.height * squareRect.transform.localScale.y + squareOffset;
 
@@ -77,9 +83,25 @@ public class SudokuGrid : MonoBehaviour
             {
                 rowNumber++;
                 columnNumber = 0;
+                squareDistanceNumb.x = 0;
+                rowMoved = false;
             }
-            var posXOffset = offset.x * columnNumber;
-            var posYOffset = offset.y * rowNumber;
+            var posXOffset = offset.x * columnNumber + (squareDistanceNumb.x * squareDistance);
+            var posYOffset = offset.y * rowNumber + (squareDistanceNumb.y * squareDistance);
+
+            if (columnNumber > 0 && (columnNumber % 3 == 0))
+            {
+                squareDistanceNumb.x++;
+                posXOffset += squareDistance;
+            }
+
+            if (rowNumber > 0 && (rowNumber % 3 == 0) && !rowMoved)  
+            {
+                rowMoved = true;
+                squareDistanceNumb.y++;
+                posYOffset += squareDistance;
+            }
+
             square.GetComponent<RectTransform>().anchoredPosition = new Vector2(startPos.x + posXOffset, startPos.y - posYOffset);
             columnNumber++;
         }

@@ -45,7 +45,7 @@ public class PlayTime : MonoBehaviour
 
     void Update()
     {
-        if (!stopTimer)
+        if (!GameSettings.Instance.Paused && !stopTimer)
         {
             deltaTime += Time.deltaTime;
             TimeSpan span = TimeSpan.FromSeconds(deltaTime);
