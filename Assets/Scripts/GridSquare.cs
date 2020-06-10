@@ -33,6 +33,7 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
         }
         set
         {
+            HasWrongValue = false;
             this.correctNumber = value;
         }
     }
@@ -60,6 +61,19 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
         set
         {
             this.hasDefaultValue = value;
+        }
+    }
+
+    private bool hasWrongValue;
+    public bool HasWrongValue
+    {
+        get
+        {
+            return hasWrongValue;
+        }
+        set
+        {
+            this.hasWrongValue = value;
         }
     }
 
@@ -114,6 +128,8 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
 
             if (EnteredNumber != CorrectNumber)
             {
+                HasWrongValue = true;
+
                 colors.normalColor = Color.red;
                 this.colors = colors;
 
@@ -121,7 +137,9 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
             }
             else
             {
+                HasWrongValue = false;
                 HasDefaultValue = true;
+
                 colors.normalColor = Color.white;
                 this.colors = colors;
             }
@@ -136,4 +154,10 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
         }
     }
 
+    public void SetSquareColor(Color color)
+    {
+        ColorBlock colors = this.colors;
+        colors.normalColor = color;
+        this.colors = colors;
+    }
 }
