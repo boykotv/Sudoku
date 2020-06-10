@@ -48,4 +48,17 @@ public class GameEvents : MonoBehaviour
             OnGameOver();
         }
     } 
+
+    //note mode
+    public delegate void NotesActive(bool active);
+
+    public static event NotesActive OnNotesActive;
+
+    public static void OnNotesActiveMethod(bool active)
+    {
+        if (OnNotesActive != null)
+        {
+            OnNotesActive(active);
+        }
+    }
 }

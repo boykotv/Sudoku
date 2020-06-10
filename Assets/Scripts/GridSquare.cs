@@ -10,6 +10,21 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
     [SerializeField]
     private GameObject squareText;
 
+    public List<GameObject> notesNumbers;
+    
+    private bool noteActive;
+    public bool NoteActive
+    {
+        get
+        {
+            return noteActive;
+        }
+        set
+        {
+            this.noteActive = value;
+        }
+    }
+
     private int enteredNumber = 0;
     public int EnteredNumber
     {
@@ -90,6 +105,85 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
         }
     }
 
+    void Start()
+    {
+        SetNoteNumberValue(0);
+    }
+
+    public List<string> GetSquareNotes()
+    {
+        List<string> notes =  new List<string>();
+
+        foreach (var number in notesNumbers)
+        {
+            notes.Add(number.GetComponent<Text>().text);
+        }
+
+        return notes;
+    }
+
+    private void SetClearEmptyNotes()
+    {
+        foreach (var number in notesNumbers)
+        {
+            if (number.GetComponent<Text>().text == "0")
+            {
+                number.GetComponent<Text>().text = " ";
+            }
+        }
+    }
+
+    private void SetNoteNumberValue(int value)
+    {
+        foreach (var number in notesNumbers)
+        {
+            if (value <= 0)
+            {
+                number.GetComponent<Text>().text = " ";
+            }
+            else
+            {
+                number.GetComponent<Text>().text = value.ToString();
+            }
+        }
+    }
+
+    private void SetNoteSingleNumberValue(int value, bool forceUpdate = false)
+    {
+        if (!NoteActive && !forceUpdate)
+        {
+            return;
+        }        
+        if (value <= 0)
+        {
+            notesNumbers[value - 1].GetComponent<Text>().text = " ";
+        }
+        else
+        {
+            if (notesNumbers[value - 1].GetComponent<Text>().text == " " || forceUpdate)
+            {
+                notesNumbers[value - 1].GetComponent<Text>().text = value.ToString();
+            }
+            else
+            {
+                notesNumbers[value - 1].GetComponent<Text>().text = " ";
+            }
+        }
+    }
+
+    public void SetGridNotes(List<int> notes)
+    {
+        foreach (var note in notes)
+        {
+            SetNoteSingleNumberValue(note, true);
+        }
+    }
+
+    public void OnNotesActive(bool active) //dont need
+    {
+        NoteActive = active;
+    }
+
     public void DisplayText()
     {
         squareText.GetComponent<Text>().text = EnteredNumber <= 0 ? " " : EnteredNumber.ToString();
@@ -110,38 +204,47 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
     {
         GameEvents.OnUpdateSquareNumber += OnSetNumber;
         GameEvents.OnSquareSelected += OnSquareSelected;
+        GameEvents.OnNotesActive += OnNotesActive;
     }
 
     private void OnDisable()
     {
         GameEvents.OnUpdateSquareNumber -= OnSetNumber;  
         GameEvents.OnSquareSelected -= OnSquareSelected;
-
+        GameEvents.OnNotesActive -= OnNotesActive;
     }
 
     public void OnSetNumber(int number)
     {
         if (IsSelected && !HasDefaultValue)
         {
-            EnteredNumber = number;
-            ColorBlock colors = this.colors;
-
-            if (EnteredNumber != CorrectNumber)
+            if (NoteActive && !HasWrongValue)
             {
-                HasWrongValue = true;
-
-                colors.normalColor = Color.red;
-                this.colors = colors;
-
-                GameEvents.OnWrongNumberMethod();
+                SetNoteSingleNumberValue(number);
             }
-            else
+            else if (!NoteActive)
             {
-                HasWrongValue = false;
-                HasDefaultValue = true;
+                SetNoteNumberValue(0);
+                EnteredNumber = number;
+                ColorBlock colors = this.colors;
 
-                colors.normalColor = Color.white;
-                this.colors = colors;
+                if (EnteredNumber != CorrectNumber)
+                {
+                    HasWrongValue = true;
+
+                    colors.normalColor = Color.red;
+                    this.colors = colors;
+
+                    GameEvents.OnWrongNumberMethod();
+                }
+                else
+                {
+                    HasWrongValue = false;
+                    HasDefaultValue = true;
+
+                    colors.normalColor = Color.white;
+                    this.colors = colors;
+                }
             }
         }
     }
