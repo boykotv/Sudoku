@@ -53,6 +53,14 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
         }
     }
 
+    public void SetCorrectNumber()
+    {
+        EnteredNumber = CorrectNumber;
+        SetNoteNumberValue(0);
+        DisplayText();
+    }
+
+
     private bool isSelected;
     public bool IsSelected
     {
@@ -105,6 +113,12 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
         }
     }
 
+    public bool IsCorrectNumberSet
+    {
+        get{
+            return EnteredNumber == CorrectNumber;
+        }
+    }
     void Start()
     {
         SetNoteNumberValue(0);

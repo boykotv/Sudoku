@@ -74,4 +74,17 @@ public class GameEvents : MonoBehaviour
             OnClearNumber();
         }
     }
+
+    public delegate void BoardCompleted();
+    
+    public static event BoardCompleted OnBoardCompleted;
+
+    public static void BoardCompletedMethod()
+    {
+        if (OnBoardCompleted != null)
+        {
+            OnBoardCompleted();
+        }
+    }
+
 }
