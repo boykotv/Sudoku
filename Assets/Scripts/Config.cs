@@ -54,7 +54,7 @@ public class Config : MonoBehaviour
 
         foreach (var square in gridNotes)
         {
-            string squareString = "#" + square.Key + ",";
+            string squareString = "#" + square.Key + ":";
             bool save = false;
 
             foreach (var note in square.Value)
@@ -84,7 +84,7 @@ public class Config : MonoBehaviour
         while ((line = file.ReadLine()) != null)
         {
             string[] word = line.Split(':');
-            if (word[0] == "squareNote")
+            if (word[0] == "#squareNote")
             {
                 int squareIndex = -1;
                 List<int> notes = new List<int>();

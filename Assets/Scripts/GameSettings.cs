@@ -34,6 +34,33 @@ public class GameSettings : MonoBehaviour
 
     private EGameMode _EGameMode;
 
+    private bool continuePreviousGame = false;
+    public bool ContinuePreviousGame
+    {
+        get
+        {
+            return continuePreviousGame;
+        }
+        set
+        {
+            this.continuePreviousGame = value;
+        }
+    }
+
+    private bool exitAfterWon = false;
+    public bool ExitAfterWon
+    {
+        get
+        {
+            return exitAfterWon;
+        }
+        set
+        {
+            this.exitAfterWon = value;
+            ContinuePreviousGame = false;
+        }
+    }
+
     private bool paused;
     public bool Paused
     {
@@ -43,13 +70,14 @@ public class GameSettings : MonoBehaviour
         }
         set
         {
-            paused = value;
+            this.paused = value;
         }
     }
 
     void Start() 
     {
         _EGameMode = EGameMode.NOT_SET;
+        ContinuePreviousGame = false;
     }
 
     public void SetGameMode(EGameMode mode)

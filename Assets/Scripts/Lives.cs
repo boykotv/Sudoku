@@ -9,24 +9,49 @@ public class Lives : MonoBehaviour
     
     int lives_ = 0; //зачем жизни декрементировать, если считаем ошибки. можно же сравнивать кол-во ошибок с кол-вом жизней
 
-    int error_number_ = 0;
+    private int errorNumber;
+    public int ErrorNumber
+    {
+        get
+        {
+            return errorNumber;
+        }
+        set
+        {
+            this.errorNumber = value;
+        }
+    }
 
     [SerializeField]
     private GameObject gameOverPopUp;
+
+    public static Lives instance;
+    
+    void Awake() 
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(this);
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
     {
         lives_ = error_images.Count;
-        error_number_ = 0;
+        ErrorNumber = 0;
     }
 
     private void WrongNumber()
     {
-        if (error_number_ < error_images.Count) // i don't like it
+        if (ErrorNumber < error_images.Count) // i don't like it
         {
-            error_images[error_number_].SetActive(true);
-            error_number_++;
+            error_images[ErrorNumber].SetActive(true);
+            ErrorNumber++;
             lives_--;
         }
         CheckForGameOver();
