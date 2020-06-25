@@ -6,6 +6,20 @@ using UnityEngine.UI;
 
 public class PlayTime : MonoBehaviour
 {
+
+    private float timerTime;
+    public float TimerTime
+    {
+        get
+        {
+            return timerTime;
+        }
+        set
+        {
+            this.timerTime = value;
+        }
+    }
+
     private Text textTimer;
     public Text TextTimer
     {
@@ -35,7 +49,14 @@ public class PlayTime : MonoBehaviour
 
         TextTimer = GetComponent<Text>(); //? maybe in Start
 
-        deltaTime = 0;
+        if (GameSettings.Instance.ContinuePreviousGame)
+        {
+            deltaTime = Config.ReadGameTime();
+        }
+        else
+        {
+            deltaTime = 0;
+        }
     }
 
     void Start()
@@ -48,6 +69,8 @@ public class PlayTime : MonoBehaviour
         if (!GameSettings.Instance.Paused && !stopTimer)
         {
             deltaTime += Time.deltaTime;
+            TimerTime = deltaTime;
+
             TimeSpan span = TimeSpan.FromSeconds(deltaTime);
 
             string hour = LeadingZero(span.Hours);

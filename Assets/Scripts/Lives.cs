@@ -44,6 +44,17 @@ public class Lives : MonoBehaviour
     {
         lives_ = error_images.Count;
         ErrorNumber = 0;
+
+        if (GameSettings.Instance.ContinuePreviousGame)
+        {
+            ErrorNumber = Config.ErrorNumber();
+            lives_ = error_images.Count - ErrorNumber;
+
+            for (int error = 0; error < ErrorNumber; error++)
+            {
+                error_images[error].SetActive(true);
+            }
+        }
     }
 
     private void WrongNumber()

@@ -53,6 +53,7 @@ public class SudokuGrid : MonoBehaviour
 
     void SetGridFromFile()
     {
+        Debug.Log("SetGridFromFile");
         string level = GameSettings.Instance.GetGameMode();
         selectedGridData = Config.ReadGameBoardLevel();
         var data = Config.ReadGridData();
@@ -148,8 +149,11 @@ public class SudokuGrid : MonoBehaviour
     {
         for (int cellIndex = 0; cellIndex < gridSquareList.Count; cellIndex++)
         {
-            gridSquareList[cellIndex].GetComponent<GridSquare>().EnteredNumber = data.unsolvedData[cellIndex];
-            gridSquareList[cellIndex].GetComponent<GridSquare>().CorrectNumber = data.solvedData[cellIndex];
+            gridSquareList[cellIndex].GetComponent<GridSquare>().EnteredNumber = data.unsolvedData[cellIndex];            
+            gridSquareList[cellIndex].GetComponent<GridSquare>().CorrectNumber = data.solvedData[cellIndex];            
+
+            //Debug.Log ("EnteredNumber = " + data.unsolvedData[cellIndex] + " " + "CorrectNumber = " + data.solvedData[cellIndex]);
+
             gridSquareList[cellIndex].GetComponent<GridSquare>().HasDefaultValue = data.unsolvedData[cellIndex] != 0 && data.unsolvedData[cellIndex] == data.solvedData[cellIndex];
         }
     }

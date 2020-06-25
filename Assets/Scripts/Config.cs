@@ -1,8 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 using UnityEngine;
+
 
 
 public class Config : MonoBehaviour
@@ -28,7 +30,7 @@ public class Config : MonoBehaviour
         File.WriteAllText(path, string.Empty);
         StreamWriter writer = new StreamWriter(path, false);
 
-        string currentTime = "#time:" + PlayTime.instance.TextTimer.text; //? 9:40
+        string currentTime = "#time:" + PlayTime.instance.TimerTime; //? 9:40
         string levelString = "#level:" + level;
         string errorNumberString = "#errors:" + errorNumber;
         string boardIndexString = "#boardIndex:" + boardIndex.ToString();
@@ -161,6 +163,8 @@ public class Config : MonoBehaviour
             }
         }
 
+        file.BaseStream.Position = 0;
+
         while ((line = file.ReadLine()) != null)
         {
             string[] word = line.Split(':');
@@ -214,14 +218,15 @@ public class Config : MonoBehaviour
         while ((line = file.ReadLine()) != null)
         {
             string[] word = line.Split(':');
+
             if (word[0] == "#time")
             {
-                float.TryParse(word[1], out playTime);
+                float.TryParse(word[1], out playTime);                
             }
         }
 
         file.Close();
-
+        
         return playTime;
     }
 
