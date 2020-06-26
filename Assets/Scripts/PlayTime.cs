@@ -37,15 +37,15 @@ public class PlayTime : MonoBehaviour
 
     private bool stopTimer = false;
 
-    public static PlayTime instance;
+    public static PlayTime Instance;
 
     void Awake()
     {
-        if (instance)
+        if (Instance)
         {
-            Destroy(instance);
+            Destroy(Instance);
         }
-        instance = this; // check InscopeStudio
+        Instance = this; // check InscopeStudio
 
         TextTimer = GetComponent<Text>(); //? maybe in Start
 
@@ -101,4 +101,8 @@ public class PlayTime : MonoBehaviour
         GameEvents.OnGameOver -= OnGameOver;
     }
 
+    public void StartTimer()
+    {
+        stopTimer = false;
+    }
 }

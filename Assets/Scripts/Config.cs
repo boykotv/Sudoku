@@ -30,7 +30,7 @@ public class Config : MonoBehaviour
         File.WriteAllText(path, string.Empty);
         StreamWriter writer = new StreamWriter(path, false);
 
-        string currentTime = "#time:" + PlayTime.instance.TimerTime; //? 9:40
+        string currentTime = "#time:" + PlayTime.Instance.TimerTime; //? 9:40
         string levelString = "#level:" + level;
         string errorNumberString = "#errors:" + errorNumber;
         string boardIndexString = "#boardIndex:" + boardIndex.ToString();
@@ -147,6 +147,7 @@ public class Config : MonoBehaviour
         while ((line = file.ReadLine()) != null)
         {
             string[] word = line.Split(':');
+
             if (word[0] == "#unsolved")
             {
                 string[] substrings = Regex.Split(word[1], ",");
@@ -161,14 +162,8 @@ public class Config : MonoBehaviour
                     }
                 }
             }
-        }
 
-        file.BaseStream.Position = 0;
-
-        while ((line = file.ReadLine()) != null)
-        {
-            string[] word = line.Split(':');
-            if (word[0] == "#solved")
+            else if (word[0] == "#solved")
             {
                 string[] substrings = Regex.Split(word[1], ",");
 

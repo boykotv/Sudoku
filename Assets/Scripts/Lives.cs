@@ -25,13 +25,13 @@ public class Lives : MonoBehaviour
     [SerializeField]
     private GameObject gameOverPopUp;
 
-    public static Lives instance;
+    public static Lives Instance;
     
     void Awake() 
     {
-        if (instance == null)
+        if (Instance == null)
         {
-            instance = this;
+            Instance = this;
         }
         else
         {
@@ -87,4 +87,14 @@ public class Lives : MonoBehaviour
         GameEvents.OnWrongNumber -= WrongNumber;
     }
 
+    public void ResetLives()
+    {
+        foreach (var error in error_images)
+        {
+            error.SetActive(false);
+        }
+
+        ErrorNumber = 0;
+        lives_ = error_images.Count;
+    }
 }

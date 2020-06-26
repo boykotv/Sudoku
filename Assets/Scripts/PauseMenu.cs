@@ -10,6 +10,6 @@ public class PauseMenu : MonoBehaviour
 
    public void DisplayTime()
    {
-        CurrentTimeText.text = PlayTime.instance.TextTimer.text;
+        CurrentTimeText.text = PlayTime.Instance.TextTimer.text;
    }
 }

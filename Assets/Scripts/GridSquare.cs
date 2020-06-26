@@ -234,7 +234,7 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
         GameEvents.OnSquareSelected += OnSquareSelected;
         GameEvents.OnNotesActive += OnNotesActive;
         GameEvents.OnClearNumber += OnClearNumber;
-
+        GameEvents.OnGameOver += OnGameOver;
     }
 
     private void OnDisable()
@@ -243,7 +243,18 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
         GameEvents.OnSquareSelected -= OnSquareSelected;
         GameEvents.OnNotesActive -= OnNotesActive;
         GameEvents.OnClearNumber -= OnClearNumber;
+        GameEvents.OnGameOver -= OnGameOver;
+    }
 
+    private void OnGameOver()
+    {
+        if (EnteredNumber != 0 && EnteredNumber != CorrectNumber)
+        {
+            HasWrongValue = false;
+            SetSquareColor(Color.white);
+            EnteredNumber = 0;
+            DisplayText();
+        }
     }
 
     public void OnClearNumber()

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LineIndicator : MonoBehaviour
 {
-    public static LineIndicator instance;
+    public static LineIndicator Instance;
 
     private int[,] lineData = new int[9, 9]
     {
@@ -53,9 +53,9 @@ public class LineIndicator : MonoBehaviour
 
     void Awake() 
     {
-        if (instance == null)
+        if (Instance == null)
         {
-            instance = this;
+            Instance = this;
         }
         else
         {

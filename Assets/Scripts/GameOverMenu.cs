@@ -10,7 +10,7 @@ public class GameOverMenu : MonoBehaviour
     
     void Start()
     {
-        CurrentTimeText.text = PlayTime.instance.TextTimer.text;
+        CurrentTimeText.text = PlayTime.Instance.TextTimer.text;
     }
 
 }

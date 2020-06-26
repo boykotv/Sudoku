@@ -59,4 +59,10 @@ public class MenuButtons : MonoBehaviour
     {
         GameSettings.Instance.ExitAfterWon = true;
     }
+
+    public void ContinueAfterGameOver()
+    {
+        AdManager.Instance.ShowInterstitialAd();
+        Lives.Instance.ResetLives();
+    }
 }

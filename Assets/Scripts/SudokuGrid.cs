@@ -49,11 +49,12 @@ public class SudokuGrid : MonoBehaviour
         {
             SetGridNumber(GameSettings.Instance.GetGameMode());
         }
+
+        AdManager.Instance.ShowBanner();
     }
 
     void SetGridFromFile()
     {
-        Debug.Log("SetGridFromFile");
         string level = GameSettings.Instance.GetGameMode();
         selectedGridData = Config.ReadGameBoardLevel();
         var data = Config.ReadGridData();
@@ -151,9 +152,6 @@ public class SudokuGrid : MonoBehaviour
         {
             gridSquareList[cellIndex].GetComponent<GridSquare>().EnteredNumber = data.unsolvedData[cellIndex];            
             gridSquareList[cellIndex].GetComponent<GridSquare>().CorrectNumber = data.solvedData[cellIndex];            
-
-            //Debug.Log ("EnteredNumber = " + data.unsolvedData[cellIndex] + " " + "CorrectNumber = " + data.solvedData[cellIndex]);
-
             gridSquareList[cellIndex].GetComponent<GridSquare>().HasDefaultValue = data.unsolvedData[cellIndex] != 0 && data.unsolvedData[cellIndex] == data.solvedData[cellIndex];
         }
     }
@@ -185,12 +183,14 @@ public class SudokuGrid : MonoBehaviour
 
         if (!GameSettings.Instance.ExitAfterWon)
         {
-            Config.SaveBoardData(currentGameData, GameSettings.Instance.GetGameMode(), selectedGridData, Lives.instance.ErrorNumber, gridNotes);
+            Config.SaveBoardData(currentGameData, GameSettings.Instance.GetGameMode(), selectedGridData, Lives.Instance.ErrorNumber, gridNotes);
         }
         else
         {
             Config.DeleteDataFile();
         }
+
+        AdManager.Instance.HideBanner();
     }
 
     private void SetSquaresColor(int[] data, Color color)
@@ -208,11 +208,11 @@ public class SudokuGrid : MonoBehaviour
 
     public void OnSquareSelected(int squareIndex)
     {
-        var horizontalLine = LineIndicator.instance.GetHorizontalLine(squareIndex);
-        var verticalLine = LineIndicator.instance.GetVerticalLine(squareIndex);
-        var square = LineIndicator.instance.GetSquare(squareIndex);
+        var horizontalLine = LineIndicator.Instance.GetHorizontalLine(squareIndex);
+        var verticalLine = LineIndicator.Instance.GetVerticalLine(squareIndex);
+        var square = LineIndicator.Instance.GetSquare(squareIndex);
 
-        SetSquaresColor(LineIndicator.instance.GetAllSquaresIndexes(), Color.white);
+        SetSquaresColor(LineIndicator.Instance.GetAllSquaresIndexes(), Color.white);
         
         SetSquaresColor(horizontalLine, LineHighlightColor);
         SetSquaresColor(verticalLine, LineHighlightColor);

@@ -20,7 +20,7 @@ public class GameWon : MonoBehaviour
     private void OnBoardComleted()
     {
         WinPopUp.SetActive(true);
-        CurrentTimeText.text = PlayTime.instance.TextTimer.text;
+        CurrentTimeText.text = PlayTime.Instance.TextTimer.text;
     }
 
     private void OnEnable()
