@@ -4,6 +4,18 @@ using UnityEngine;
 
 public class GameEvents : MonoBehaviour
 {
+    public delegate void CheckBoardCompleted();
+    
+    public static event CheckBoardCompleted OnCheckBoardCompleted;
+    
+    public static void CheckBoardCompletedMethod()
+    {
+        if (OnCheckBoardCompleted != null)
+        {
+            OnCheckBoardCompleted();
+        }
+    }
+
     public delegate void UpdateSquareNumber(int number);
     public static event UpdateSquareNumber OnUpdateSquareNumber;
 

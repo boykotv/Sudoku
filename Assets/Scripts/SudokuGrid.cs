@@ -159,13 +159,13 @@ public class SudokuGrid : MonoBehaviour
     private void OnEnable()
     {
         GameEvents.OnSquareSelected += OnSquareSelected;
-        GameEvents.OnUpdateSquareNumber += CheckBoardCompleted;
+        GameEvents.OnCheckBoardCompleted += CheckBoardCompleted;
     }
 
     private void OnDisable() 
     {
         GameEvents.OnSquareSelected -= OnSquareSelected;
-        GameEvents.OnUpdateSquareNumber -= CheckBoardCompleted;
+        GameEvents.OnCheckBoardCompleted -= CheckBoardCompleted;
 
         var solvedData = SudokuData.Instance.sudokuGame[GameSettings.Instance.GetGameMode()][selectedGridData].solvedData;
         int[] unsolvedData = new int[81];
@@ -221,7 +221,7 @@ public class SudokuGrid : MonoBehaviour
         SetSquaresColor(square, LineHighlightColor);
     }
 
-    private void CheckBoardCompleted(int number)
+    private void CheckBoardCompleted()
     {
         foreach (var square in gridSquareList)
         {
@@ -244,6 +244,6 @@ public class SudokuGrid : MonoBehaviour
             comp.SetCorrectNumber();
         }
 
-        CheckBoardCompleted(0);
+        CheckBoardCompleted();
     }
 }

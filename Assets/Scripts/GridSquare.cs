@@ -251,10 +251,10 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
         if (EnteredNumber != 0 && EnteredNumber != CorrectNumber)
         {
             HasWrongValue = false;
-            SetSquareColor(Color.white);
             EnteredNumber = 0;
             DisplayText();
         }
+        SetSquareColor(Color.white);
     }
 
     public void OnClearNumber()
@@ -301,6 +301,7 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
                     this.colors = colors;
                 }
             }
+            GameEvents.CheckBoardCompletedMethod();
         }
     }
 
