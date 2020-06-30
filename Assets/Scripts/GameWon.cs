@@ -17,7 +17,7 @@ public class GameWon : MonoBehaviour
         WinPopUp.SetActive(false);
     }
 
-    private void OnBoardComleted()
+    private void OnBoardCompleted()
     {
         WinPopUp.SetActive(true);
         CurrentTimeText.text = PlayTime.Instance.TextTimer.text;
@@ -25,11 +25,11 @@ public class GameWon : MonoBehaviour
 
     private void OnEnable()
     {
-        GameEvents.OnBoardCompleted += OnBoardComleted;
+        GameEvents.OnBoardCompleted += OnBoardCompleted;
     }
 
     private void OnDisable()
     {
-        GameEvents.OnBoardCompleted -= OnBoardComleted;        
+        GameEvents.OnBoardCompleted -= OnBoardCompleted;        
     }
 }

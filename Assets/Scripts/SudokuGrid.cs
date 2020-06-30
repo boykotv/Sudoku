@@ -191,6 +191,8 @@ public class SudokuGrid : MonoBehaviour
         }
 
         AdManager.Instance.HideBanner();
+
+        GameSettings.Instance.ExitAfterWon = false;
     }
 
     private void SetSquaresColor(int[] data, Color color)

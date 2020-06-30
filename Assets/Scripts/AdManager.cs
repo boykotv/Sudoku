@@ -5,15 +5,20 @@ using GoogleMobileAds.Api;
 
 public class AdManager : MonoBehaviour
 {
-    public string appID;
+    [SerializeField]
+    private string appID;
 
-    public string bannerAdId;
+    [SerializeField]
+    private string bannerAdId;
 
-    public string interstitialAdlId;
+    [SerializeField]
+    private string interstitialAdlId;
 
-    public AdPosition bannerPos;
+    [SerializeField]
+    private AdPosition bannerPos;
 
-    public bool testDevice = false;
+    [SerializeField]
+    private bool testDevice = false;
 
     public static AdManager Instance;
 
@@ -98,7 +103,4 @@ public class AdManager : MonoBehaviour
         }
 
     #endregion
-
-
-
 }
